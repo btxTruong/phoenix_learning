@@ -17,6 +17,7 @@
     - `npx tailwindcss init -p`
     - Update `tailwind.config.js`
     - Update `postcss.config.js`
+    - Update `src/index.css`
 ```js
 // tailwind.config.js
 export default {
@@ -33,7 +34,6 @@ export default {
 }
 ```
 
-
 ```js
 // postcss.config.js
 export default {
@@ -44,6 +44,13 @@ export default {
     autoprefixer: {},
   }
 };
+```
+
+```css
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 ```
 
 - Setup eslint + prettier: follow [this guide](https://medium.com/tinyso/react-hero-setup-eslint-for-typescript-react-application-d171df2bb408) and [this guide](https://typescript-eslint.io/getting-started)
