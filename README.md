@@ -4,3 +4,7 @@
 
 ## Resource
 https://www.learnphoenix.io/
+
+# Current state
+[Jun 20 2023]
+https://www.learnphoenix.io/phoenix-chat/create-a-reusable-button-component
