@@ -8,7 +8,8 @@ config :phoenix_chat, PhoenixChat.Repo,
   database: "phoenix_chat_dev",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  pool_size: 10,
+  port: 7432 # should update this one to match docker-compose.db.yml
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

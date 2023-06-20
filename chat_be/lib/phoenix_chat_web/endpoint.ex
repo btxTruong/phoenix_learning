@@ -45,5 +45,6 @@ defmodule PhoenixChatWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug Corsica, allow_headers: ~w(Accept Content-Type Authorization) # have to put before Router
   plug PhoenixChatWeb.Router
 end

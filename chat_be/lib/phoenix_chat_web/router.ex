@@ -7,6 +7,8 @@ defmodule PhoenixChatWeb.Router do
 
   scope "/api", PhoenixChatWeb do
     pipe_through :api
+
+    resources "/users", UserController, except: [:show, :index, :new, :edit]
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

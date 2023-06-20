@@ -1,21 +1,44 @@
 # PhoenixChat
 
 ## Initial Setup
-`mix phx.new chat_be --module PhoenixChat --app phoenix_chat --no-html --no-gettext --no--assets`
+- Start project `mix phx.new chat_be --module PhoenixChat --app phoenix_chat --no-html --no-gettext --no--assets`
+- Create auth: `mix phx.gen.json Accounts User users email:string encrypted_password:string username:string`
+- Add index in `create_users` migration:
 
-To start your Phoenix server:
+```elixir
+ create unique_index(:users, [:email])
+ create unique_index(:users, [:username])
+```
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+- Add `bcrypt_elixir` to `mix.exs` and run`mix deps.get`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+```elixir
+{:bcrypt_elixir, "~> 3.0"}
+```
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+- Add port in `config/dev.exs` to `7432` and run migrate `mix ecto.setup`
 
-## Learn more
+## To start your Phoenix server
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+- Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+
+## Dev change
+### Sign-up
+- Add new changeset for registration in `lib/accounts/user.ex`
+
+  The primary reason for separate changeset is so we can validate and hash passwords only when necessary
+```elixir
+def registration_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [:email, :password])
+    |> validate_email(opts)
+    |> validate_password(opts)
+  end
+```
+
+- Because we use repo arch, so we will update `lib/accounts.ex` to implement db call module. Another module will call this module to interact with db
+
+### CORS
+- Add `{:corsica, "~> 1.0"}` to `mix.exs` and run `mix deps.get`
+- Add `plug Corsica, allow_headers: ~w(Accept Content-Type Authorization)` in `lib/chat_be/endpoint.ex` before it hits our Router
